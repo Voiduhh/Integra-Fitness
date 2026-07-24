@@ -1,6 +1,5 @@
 # Integra Fitness
 
-<<<<<<< HEAD
 Integra Fitness is a modern Flutter application designed to bring together the key components of a complete wellness experience in one polished mobile interface.
 
 ## Overview
