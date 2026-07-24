@@ -91,4 +91,3 @@ A Flutter Application that tries to combine all the different fitness apps into 
 * Nutrition tracking with personalized plans
 * Community section for gyms/groups/friends etc.
 * and more
->>>>>>> 2506b8728ca0968b9c28f4bf701eff07d482f453
