@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     const seedColor = Color(0xFF58B99A);
     return MaterialApp(
-      title: 'Nourish',
+      title: 'Integra Fitness',
       debugShowCheckedModeBanner: false,
       themeMode: _themeMode,
       theme: ThemeData(
