@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'tabs/today_tab.dart';
-import 'tabs/meals_tab.dart';
-import 'tabs/plans_tab.dart';
-import 'tabs/community_tab.dart';
-import 'tabs/profile_tab.dart';
+import 'app_state.dart';
+import 'tabs/quick_glance/today_tab.dart';
+import 'tabs/food/food_tab.dart';
+import 'tabs/plans/plans_tab.dart';
+import 'tabs/community/community_tab.dart';
+import 'tabs/profile/profile_tab.dart';
 
 class SlidePageTransitionsBuilder extends PageTransitionsBuilder {
   const SlidePageTransitionsBuilder();
@@ -45,7 +46,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = ThemeMode.dark;
+  @override
+  void initState() {
+    super.initState();
+    isDarkMode.addListener(_themeChanged);
+  }
+
+  @override
+  void dispose() {
+    isDarkMode.removeListener(_themeChanged);
+    super.dispose();
+  }
+
+  void _themeChanged() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Integra Fitness',
       debugShowCheckedModeBanner: false,
-      themeMode: _themeMode,
+      themeMode: isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         colorScheme:
             ColorScheme.fromSeed(
@@ -88,24 +101,13 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         pageTransitionsTheme: _slidePageTransitionsTheme,
       ),
-      home: FitnessHomePage(
-        isDarkMode: _themeMode == ThemeMode.dark,
-        onThemeChanged: (isDark) => setState(
-          () => _themeMode = isDark ? ThemeMode.dark : ThemeMode.light,
-        ),
-      ),
+      home: const FitnessHomePage(),
     );
   }
 }
 
 class FitnessHomePage extends StatefulWidget {
-  const FitnessHomePage({
-    super.key,
-    required this.isDarkMode,
-    required this.onThemeChanged,
-  });
-  final bool isDarkMode;
-  final ValueChanged<bool> onThemeChanged;
+  const FitnessHomePage({super.key});
 
   @override
   State<FitnessHomePage> createState() => _FitnessHomePageState();
@@ -115,7 +117,7 @@ class _FitnessHomePageState extends State<FitnessHomePage> {
   int _selectedIndex = 0;
   static const _navItems = [
     (Icons.grid_view_rounded, 'Today'),
-    (Icons.restaurant_menu_rounded, 'Meals'),
+    (Icons.restaurant_menu_rounded, 'Food'),
     (Icons.fitness_center_rounded, 'Plans'),
     (Icons.groups_rounded, 'Community'),
     (Icons.person_outline_rounded, 'Profile'),
@@ -131,7 +133,7 @@ class _FitnessHomePageState extends State<FitnessHomePage> {
           const MealsTab(),
           const PlansTab(),
           const CommunityTab(),
-          ProfileTab(onThemeChanged: widget.onThemeChanged),
+          const ProfileTab(),
         ],
       ),
     ),

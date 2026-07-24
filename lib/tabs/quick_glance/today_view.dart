@@ -1,100 +1,110 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../app_state.dart';
 
 class TodayView extends StatelessWidget {
   const TodayView() : super(key: const ValueKey<String>('TodayView'));
 
   @override
-  Widget build(BuildContext context) => CustomScrollView(
-    slivers: [
-      SliverPadding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-        sliver: SliverList(
-          delegate: SliverChildListDelegate([
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      DateFormat('EEEE, MMMM d').format(DateTime.now()),
-                      style: TextStyle(
-                        fontSize: 12,
-                        letterSpacing: 1.1,
-                        fontWeight: FontWeight.w700,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+  Widget build(BuildContext context) {
+    final darkMode = isDarkMode.value;
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate([
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        DateFormat('EEEE, MMMM d').format(DateTime.now()),
+                        style: TextStyle(
+                          fontSize: 12,
+                          letterSpacing: 1.1,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 7),
-                    Text(
-                      'Good morning, Alex',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800,
-                        color: Theme.of(context).colorScheme.onSurface,
+                      const SizedBox(height: 7),
+                      Text(
+                        'Good morning, Alex',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
+                    ],
+                  ),
+                  const CircleAvatar(
+                    radius: 23,
+                    backgroundColor: Color.fromARGB(255, 193, 214, 207),
+                    child: Text('A', style: _avatarStyle),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              const _ProgressCard(),
+              const SizedBox(height: 28),
+              const _SectionHeader(title: "Today's rhythm", action: 'See all'),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _MetricCard(
+                      label: 'Move',
+                      value: '420',
+                      unit: 'kcal',
+                      icon: Icons.local_fire_department_rounded,
+                      color: darkMode
+                          ? Color.fromARGB(255, 206, 148, 68)
+                          : const Color(0xFFF8E4C8),
                     ),
-                  ],
-                ),
-                const CircleAvatar(
-                  radius: 23,
-                  backgroundColor: Color(0xFFD8ECE5),
-                  child: Text('A', style: _avatarStyle),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const _ProgressCard(),
-            const SizedBox(height: 28),
-            const _SectionHeader(title: "Today's rhythm", action: 'See all'),
-            const SizedBox(height: 12),
-            const Row(
-              children: [
-                Expanded(
-                  child: _MetricCard(
-                    label: 'Move',
-                    value: '420',
-                    unit: 'kcal',
-                    icon: Icons.local_fire_department_rounded,
-                    color: Color(0xFFF8E4C8),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: _MetricCard(
-                    label: 'Hydration',
-                    value: '1.2',
-                    unit: 'L',
-                    icon: Icons.water_drop_rounded,
-                    color: Color(0xFFDCECF2),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _MetricCard(
+                      label: 'Hydration',
+                      value: '1.2',
+                      unit: 'L',
+                      icon: Icons.water_drop_rounded,
+                      color: darkMode
+                          ? const Color.fromARGB(255, 59, 154, 188)
+                          : const Color(0xFFDCECF2),
+                    ),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: _MetricCard(
-                    label: 'Mindful',
-                    value: '12',
-                    unit: 'min',
-                    icon: Icons.spa_rounded,
-                    color: Color(0xFFE7E4F3),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _MetricCard(
+                      label: 'Mindful',
+                      value: '12',
+                      unit: 'min',
+                      icon: Icons.spa_rounded,
+                      color: darkMode
+                          ? const Color.fromARGB(255, 164, 101, 180)
+                          : const Color(0xFFE7E4F3),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 28),
-            const _SectionHeader(title: 'Up next', action: 'View plan'),
-            const SizedBox(height: 12),
-            const _WorkoutCard(),
-            const SizedBox(height: 28),
-            const _SectionHeader(title: 'Fuel your day', action: 'Log meal'),
-            const SizedBox(height: 12),
-            const _MealCard(),
-          ]),
+                ],
+              ),
+              const SizedBox(height: 28),
+              const _SectionHeader(title: 'Up next', action: 'View plan'),
+              const SizedBox(height: 12),
+              const _WorkoutCard(),
+              const SizedBox(height: 28),
+              const _SectionHeader(title: 'Fuel your day', action: 'Log meal'),
+              const SizedBox(height: 12),
+              const _MealCard(),
+            ]),
+          ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class _ProgressCard extends StatelessWidget {
@@ -238,7 +248,8 @@ class _WorkoutCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.surfaceContainerHighest,
+        color: colors.surface,
+        border: Border.all(color: colors.outlineVariant),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Row(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'simple_tab_view.dart';
+import '../simple_tab_view.dart';
 
 class CommunityTab extends StatelessWidget {
   const CommunityTab() : super(key: const ValueKey<String>('CommunityTab'));

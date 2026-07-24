@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profile/settings/settings_page.dart';
+import 'settings/settings_page.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView() : super(key: const ValueKey<String>('ProfileView'));

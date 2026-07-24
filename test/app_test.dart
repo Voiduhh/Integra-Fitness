@@ -11,7 +11,7 @@ void main() {
 
     expect(find.text('Good morning, Alex'), findsOneWidget);
     expect(find.text('Your daily balance'), findsOneWidget);
-    expect(find.text('Meals'), findsOneWidget);
+    expect(find.text('Food'), findsOneWidget);
     expect(find.text('Plans'), findsOneWidget);
     expect(find.text('Community'), findsOneWidget);
     expect(find.text('Profile'), findsOneWidget);
@@ -23,7 +23,7 @@ void main() {
     await tester.pumpWidget(const MyApp());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Meals'));
+    await tester.tap(find.text('Food'));
     await tester.pumpAndSettle();
 
     expect(find.text('Plan, log, and enjoy your day.'), findsOneWidget);

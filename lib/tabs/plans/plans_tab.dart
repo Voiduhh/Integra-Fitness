@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'simple_tab_view.dart';
+import '../simple_tab_view.dart';
 
 class PlansTab extends StatelessWidget {
   const PlansTab() : super(key: const ValueKey<String>('PlansTab'));
