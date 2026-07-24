@@ -158,23 +158,36 @@ class _BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        border: Border(top: BorderSide(color: colors.outlineVariant)),
-      ),
-      padding: const EdgeInsets.only(top: 8, bottom: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          for (var i = 0; i < items.length; i++)
-            _NavItem(
-              icon: items[i].$1,
-              label: items[i].$2,
-              selected: selectedIndex == i,
-              onTap: () => onSelected(i),
-            ),
-        ],
+    return BottomAppBar(
+      color: colors.surface,
+      elevation: 0,
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 64,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              for (var i = 0; i < items.length; i++) ...[
+                if (i > 0)
+                  Container(
+                    width: 1,
+                    height: 32,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                Expanded(
+                  child: _NavItem(
+                    icon: items[i].$1,
+                    label: items[i].$2,
+                    selected: selectedIndex == i,
+                    onTap: () => onSelected(i),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }
