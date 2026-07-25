@@ -5,3 +5,6 @@ import 'package:flutter/foundation.dart';
 /// `isDarkMode` is a shared state notifier so any widget can read and react
 /// to theme changes without requiring props to be passed down manually.
 final ValueNotifier<bool> isDarkMode = ValueNotifier<bool>(true);
+
+/// Global selected tab index for root navigation.
+final ValueNotifier<int> selectedTab = ValueNotifier<int>(0);

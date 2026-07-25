@@ -114,7 +114,23 @@ class FitnessHomePage extends StatefulWidget {
 }
 
 class _FitnessHomePageState extends State<FitnessHomePage> {
-  int _selectedIndex = 0;
+  // Root selected index is now controlled by the global `selectedTab` notifier.
+  @override
+  void initState() {
+    super.initState();
+    selectedTab.addListener(_tabChanged);
+  }
+
+  @override
+  void dispose() {
+    selectedTab.removeListener(_tabChanged);
+    super.dispose();
+  }
+
+  void _tabChanged() {
+    setState(() {});
+  }
+
   static const _navItems = [
     (Icons.grid_view_rounded, 'Today'),
     (Icons.restaurant_menu_rounded, 'Food'),
@@ -127,20 +143,20 @@ class _FitnessHomePageState extends State<FitnessHomePage> {
   Widget build(BuildContext context) => Scaffold(
     body: SafeArea(
       child: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          const TodayTab(),
-          const MealsTab(),
-          const PlansTab(),
-          const CommunityTab(),
-          const ProfileTab(),
+        index: selectedTab.value,
+        children: const [
+          TodayTab(),
+          MealsTab(),
+          PlansTab(),
+          CommunityTab(),
+          ProfileTab(),
         ],
       ),
     ),
     bottomNavigationBar: _BottomNavBar(
-      selectedIndex: _selectedIndex,
+      selectedIndex: selectedTab.value,
       items: _navItems,
-      onSelected: (index) => setState(() => _selectedIndex = index),
+      onSelected: (index) => selectedTab.value = index,
     ),
   );
 }
