@@ -9,74 +9,68 @@ class TodayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = isDarkMode.value;
-    return CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        DateFormat('EEEE, MMMM d').format(DateTime.now()),
-                        style: TextStyle(
-                          fontSize: 12,
-                          letterSpacing: 1.1,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      Text(
-                        'Good morning, Alex',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
-                    ],
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateFormat('EEEE, MMMM d').format(DateTime.now()),
+                  style: TextStyle(
+                    fontSize: 12,
+                    letterSpacing: 1.1,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
-                  const CircleAvatar(
-                    radius: 23,
-                    backgroundColor: Color.fromARGB(255, 193, 214, 207),
-                    child: Text('A', style: _avatarStyle),
+                ),
+                const SizedBox(height: 7),
+                Text(
+                  '${getTimeGreeting()}, Alex',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              const _ProgressCard(),
-              const SizedBox(height: 28),
-              const _SectionHeader(
-                title: "Today's rhythm",
-                action: 'See all',
-                tabValue: 3,
-              ),
-              const SizedBox(height: 12),
-              _RhythmCarousel(darkMode: darkMode),
-              const SizedBox(height: 28),
-              const _SectionHeader(
-                title: 'Up next',
-                action: 'View plan',
-                tabValue: 2,
-              ),
-              const SizedBox(height: 12),
-              const _WorkoutCard(),
-              const SizedBox(height: 28),
-              const _SectionHeader(
-                title: 'Fuel your day',
-                action: 'Log meal',
-                tabValue: 1,
-              ),
-              const SizedBox(height: 12),
-              const _MealCard(),
-            ]),
-          ),
+                ),
+              ],
+            ),
+            const CircleAvatar(
+              radius: 23,
+              backgroundColor: Color.fromARGB(255, 193, 214, 207),
+              child: Text('A', style: _avatarStyle),
+            ),
+          ],
         ),
+        const SizedBox(height: 24),
+        const _ProgressCard(),
+        const SizedBox(height: 28),
+        const _SectionHeader(
+          title: "Today's rhythm",
+          action: 'See all',
+          tabValue: 3,
+        ),
+        const SizedBox(height: 12),
+        _RhythmCarousel(darkMode: darkMode),
+        const SizedBox(height: 28),
+        const _SectionHeader(
+          title: 'Up next',
+          action: 'View plan',
+          tabValue: 2,
+        ),
+        const SizedBox(height: 12),
+        const _WorkoutCard(),
+        const SizedBox(height: 28),
+        const _SectionHeader(
+          title: 'Fuel your day',
+          action: 'Log meal',
+          tabValue: 1,
+        ),
+        const SizedBox(height: 12),
+        const _MealCard(),
       ],
     );
   }
@@ -447,7 +441,7 @@ class _RhythmCarouselState extends State<_RhythmCarousel> {
     ];
 
     return SizedBox(
-      height: 120,
+      height: 132,
       child: Stack(
         children: [
           ScrollConfiguration(

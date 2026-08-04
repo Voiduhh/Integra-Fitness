@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../app_state.dart';
 import 'settings/settings_page.dart';
 
 class ProfileView extends StatelessWidget {
@@ -7,6 +8,8 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final metrics = <String>['Steps', 'Water', 'Calories', 'Sleep'];
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 26, 20, 32),
       children: [
@@ -80,6 +83,159 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
               Icon(Icons.chevron_right_rounded, color: colors.onSurfaceVariant),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: colors.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: colors.outlineVariant),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Preferred metrics',
+                style: TextStyle(
+                  color: colors.onSurface,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Choose which metrics you want highlighted in your daily view.',
+                style: TextStyle(color: colors.onSurfaceVariant, fontSize: 13),
+              ),
+              const SizedBox(height: 14),
+              ValueListenableBuilder<List<String>>(
+                valueListenable: preferredMetrics,
+                builder: (context, selectedMetrics, child) {
+                  return Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: metrics.map((metric) {
+                      final selected = selectedMetrics.contains(metric);
+                      return FilterChip(
+                        label: Text(metric),
+                        selected: selected,
+                        onSelected: (value) {
+                          final next = List<String>.from(selectedMetrics);
+                          if (value) {
+                            next.add(metric);
+                          } else {
+                            next.remove(metric);
+                          }
+                          preferredMetrics.value = next;
+                        },
+                        selectedColor: colors.primaryContainer,
+                        checkmarkColor: colors.onPrimaryContainer,
+                        labelStyle: TextStyle(
+                          color: selected
+                              ? colors.onPrimaryContainer
+                              : colors.onSurfaceVariant,
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: colors.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: colors.outlineVariant),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Preferred units',
+                style: TextStyle(
+                  color: colors.onSurface,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Choose how you want water and calories displayed.',
+                style: TextStyle(color: colors.onSurfaceVariant, fontSize: 13),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Water',
+                style: TextStyle(
+                  color: colors.onSurface,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ValueListenableBuilder<String>(
+                valueListenable: waterUnit,
+                builder: (context, selectedWaterUnit, child) {
+                  return Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: ['Liters', 'Cups'].map((unit) {
+                      final selected = selectedWaterUnit == unit;
+                      return ChoiceChip(
+                        label: Text(unit),
+                        selected: selected,
+                        onSelected: (_) => waterUnit.value = unit,
+                        selectedColor: colors.primaryContainer,
+                        labelStyle: TextStyle(
+                          color: selected
+                              ? colors.onPrimaryContainer
+                              : colors.onSurfaceVariant,
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Calories',
+                style: TextStyle(
+                  color: colors.onSurface,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ValueListenableBuilder<String>(
+                valueListenable: calorieUnit,
+                builder: (context, selectedCalorieUnit, child) {
+                  return Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: ['kcal', 'cal'].map((unit) {
+                      final selected = selectedCalorieUnit == unit;
+                      return ChoiceChip(
+                        label: Text(unit),
+                        selected: selected,
+                        onSelected: (_) => calorieUnit.value = unit,
+                        selectedColor: colors.primaryContainer,
+                        labelStyle: TextStyle(
+                          color: selected
+                              ? colors.onPrimaryContainer
+                              : colors.onSurfaceVariant,
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
             ],
           ),
         ),
