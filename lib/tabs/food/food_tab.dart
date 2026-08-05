@@ -64,7 +64,6 @@ class _MealsTabState extends State<MealsTab> {
     final totalCalories = totalProtein * 4 + totalCarbs * 4 + totalFat * 9;
 
     return Scaffold(
-      backgroundColor: colors.surfaceContainerLow,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
@@ -84,7 +83,7 @@ class _MealsTabState extends State<MealsTab> {
                 'Track meals, build a grocery list, and discover recipes.',
                 style: TextStyle(color: colors.onSurfaceVariant, fontSize: 15),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               _FoodSection(
                 title: 'Today’s food tracking',
                 subtitle: 'Log meals and hydration for the day.',

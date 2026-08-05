@@ -8,8 +8,9 @@ class PlansTab extends StatefulWidget {
 }
 
 class _PlansTabState extends State<PlansTab> {
-  final int _selectedWorkoutIndex = 0;
-  final int _previewWorkoutIndex = 0;
+  // 1. Remove final so these indices can be initialized in initState
+  late int _selectedWorkoutIndex;
+  late int _previewWorkoutIndex;
 
   final List<_WorkoutDay> _workoutDays = const [
     _WorkoutDay(
@@ -108,6 +109,15 @@ class _PlansTabState extends State<PlansTab> {
     'Yoga mat',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    // 2. Default initial selection to current day of the week (1 = Monday, 7 = Sunday)
+    final initialIndex = DateTime.now().weekday - 1;
+    _selectedWorkoutIndex = initialIndex;
+    _previewWorkoutIndex = initialIndex;
+  }
+
   bool _isTodayDay(int index) {
     final today = DateTime.now().weekday;
     final days = [
@@ -166,25 +176,24 @@ class _PlansTabState extends State<PlansTab> {
     final currentWorkout = _workoutDays[_previewWorkoutIndex];
 
     return Scaffold(
-      backgroundColor: colors.surface,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Plans',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                style: TextStyle(
+                  fontSize: 28,
                   fontWeight: FontWeight.w800,
+                  color: colors.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Build momentum with a plan that fits your day.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colors.onSurfaceVariant,
-                ),
+                style: TextStyle(color: colors.onSurfaceVariant, fontSize: 15),
               ),
               const SizedBox(height: 20),
               _SectionCard(
@@ -192,22 +201,6 @@ class _PlansTabState extends State<PlansTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.swipe_rounded,
-                          size: 16,
-                          color: colors.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          'Swipe the day row to reveal more days',
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: colors.onSurfaceVariant),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
                     GestureDetector(
                       onHorizontalDragUpdate: _handleChipSwipe,
                       onHorizontalDragEnd: _handleChipSwipeEnd,
@@ -231,6 +224,15 @@ class _PlansTabState extends State<PlansTab> {
                                       : colors.onSurfaceVariant,
                                   fontWeight: FontWeight.w700,
                                 ),
+                                // 3. Added onSelected callback to enable user selection
+                                onSelected: (bool selected) {
+                                  if (selected) {
+                                    setState(() {
+                                      _selectedWorkoutIndex = index;
+                                      _previewWorkoutIndex = index;
+                                    });
+                                  }
+                                },
                                 avatar: isToday && !isCurrent
                                     ? Icon(
                                         Icons.today_rounded,
@@ -460,7 +462,7 @@ class _SectionCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.surfaceContainerLow,
+        color: colors.surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: colors.outlineVariant),
       ),

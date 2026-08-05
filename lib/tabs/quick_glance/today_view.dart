@@ -10,7 +10,7 @@ class TodayView extends StatelessWidget {
   Widget build(BuildContext context) {
     final darkMode = isDarkMode.value;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,21 +19,19 @@ class TodayView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  DateFormat('EEEE, MMMM d').format(DateTime.now()),
+                  '${getTimeGreeting()}, Alex',
                   style: TextStyle(
-                    fontSize: 12,
-                    letterSpacing: 1.1,
-                    fontWeight: FontWeight.w700,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 7),
                 Text(
-                  '${getTimeGreeting()}, Alex',
+                  DateFormat('EEEE, MMMM d').format(DateTime.now()),
                   style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w800,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
